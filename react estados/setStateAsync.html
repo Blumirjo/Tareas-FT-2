@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>setStateAsync</title>
+</head>
+<body>
+  <div id='app'></div>
+
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+  
+  class App extends React.Component {
+    constructor() {                 
+      super();
+      this.state = {contador: 0};
+      this.clickHandlerOne = this.clickHandlerOne.bind(this);
+      this.clickHandlerTwo = this.clickHandlerTwo.bind(this);
+      this.clickHandlerThree = this.clickHandlerThree.bind(this);
+    }
+    
+    // componentDidUpdate() {
+    //   console.log('componentDidUpdate: ', this.state.contador);
+    // }
+
+    clickHandlerOne(){                                 
+      this.setState({
+        contador: this.state.contador + 1
+      }); // 0 + 1 --> 1
+      this.setState({
+        contador: this.state.contador + 1
+      }); // 0 + 1 --> 1
+      console.log('NO callback: ', this.state.contador);
+    }
+
+    //.setState({estadonNuevo}, cb)
+    clickHandlerTwo(){                                 
+      this.setState( {
+        contador: this.state.contador + 1
+      }, function() {
+        console.log('Callback: ', this.state.contador);
+      });
+    }
+
+    clickHandlerThree(){                                 
+      this.setState(state => {
+        return {
+          contador: state.contador + 1
+        }
+      });
+      this.setState(state => {
+        return {
+          contador: state.contador + 1
+        }
+      });
+    }
+
+    render(){
+      return (
+        <div>
+          <p>{this.state.contador}</p>
+          <button onClick={this.clickHandlerOne}>CLICK ONE</button>
+          <button onClick={this.clickHandlerTwo}>CLICK TWO</button>
+          <button onClick={this.clickHandlerThree}>CLICK Three</button>
+        </div>  
+      )
+    }
+  };        
+  
+  ReactDOM.render(<App/>, document.getElementById('app'));
+  </script>
+</body>
+</html>
